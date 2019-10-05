@@ -57,7 +57,7 @@ public class Game {
             moveAllCars();
 
             // Check for collisions
-            //checkCollisions();
+            checkCollisions();
 
             // Update screen
             Field.draw(cars);
@@ -66,30 +66,23 @@ public class Game {
 
     }
 
-    private void updatePositions (Position oldPosition, Car car) {
-        positions[oldPosition.getCol()][oldPosition.getRow()]--;
-        positions[car.getPos().getCol()][car.getPos().getRow()]++;
-    }
-
     private void moveAllCars() {
-        Position oldPosition;
         for (Car car: cars
              ) {
-            oldPosition = car.getPos();
             car.move(Direction.getRandomDirection());
-            System.out.println("Before + " + positions[car.getPos().getCol()][car.getPos().getRow()]);
-            updatePositions(oldPosition, car);
-            if (positions[car.getPos().getCol()][car.getPos().getRow()] > 0 & !car.isCrashed()) {
-                car.setCrashed(true);
-            }
-            System.out.println("After + " + positions[car.getPos().getCol()][car.getPos().getRow()]);
         }
     }
 
     private void checkCollisions() {
         Position position;
+        for (int i = 0; i < positions.length; i++) {
+            for (int j = 0; j < positions[i].length; j++) {
+                positions[i][j] = 0;
+            }
+        }
         for (Car car : cars) {
             position = car.getPos();
+            positions[position.getCol()][position.getRow()]++;
             if (positions[position.getCol()][position.getRow()] > 1) {
                 car.setCrashed(true);
             }

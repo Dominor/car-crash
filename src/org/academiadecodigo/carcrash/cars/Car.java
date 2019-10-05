@@ -22,11 +22,11 @@ abstract public class Car {
         this.speed = speed;
     }
 
-    public void move (Direction direction) {
+    public boolean move (Direction direction) {
         if (isCrashed()) {
-            return;
+            return false;
         }
-        pos.update(speed, direction);
+        return pos.update(speed, direction);
     }
 
     public Position getPos() {

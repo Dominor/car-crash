@@ -21,7 +21,7 @@ public class Position {
         return row;
     }
 
-    private boolean isValid (int coordinate, CoordinateType type) {
+    public boolean isValid (int coordinate, CoordinateType type) {
         switch (type) {
             case COLUMN:
                 return (coordinate >= 0 && coordinate < Field.getWidth());
