@@ -1,9 +1,11 @@
 package org.academiadecodigo.carcrash;
 
+import javafx.geometry.Pos;
 import org.academiadecodigo.carcrash.cars.Car;
 import org.academiadecodigo.carcrash.cars.CarFactory;
 import org.academiadecodigo.carcrash.field.Direction;
 import org.academiadecodigo.carcrash.field.Field;
+import org.academiadecodigo.carcrash.field.Position;
 
 public class Game {
 
@@ -12,6 +14,9 @@ public class Game {
     /** Container of Cars */
     private Car[] cars;
 
+    // Matrix used to track the positions of the cars in each instant and thus check for collisions.
+    private int[][] positions;
+
     /** Animation delay */
     private int delay;
 
@@ -19,6 +24,7 @@ public class Game {
 
         Field.init(cols, rows);
         this.delay = delay;
+        positions = new int[cols][rows];
 
     }
 
@@ -33,7 +39,6 @@ public class Game {
         }
 
         Field.draw(cars);
-
     }
 
     /**
@@ -51,6 +56,9 @@ public class Game {
             // Move all cars
             moveAllCars();
 
+            // Check for collisions
+            //checkCollisions();
+
             // Update screen
             Field.draw(cars);
 
@@ -58,10 +66,33 @@ public class Game {
 
     }
 
+    private void updatePositions (Position oldPosition, Car car) {
+        positions[oldPosition.getCol()][oldPosition.getRow()]--;
+        positions[car.getPos().getCol()][car.getPos().getRow()]++;
+    }
+
     private void moveAllCars() {
+        Position oldPosition;
         for (Car car: cars
              ) {
+            oldPosition = car.getPos();
             car.move(Direction.getRandomDirection());
+            System.out.println("Before + " + positions[car.getPos().getCol()][car.getPos().getRow()]);
+            updatePositions(oldPosition, car);
+            if (positions[car.getPos().getCol()][car.getPos().getRow()] > 0 & !car.isCrashed()) {
+                car.setCrashed(true);
+            }
+            System.out.println("After + " + positions[car.getPos().getCol()][car.getPos().getRow()]);
+        }
+    }
+
+    private void checkCollisions() {
+        Position position;
+        for (Car car : cars) {
+            position = car.getPos();
+            if (positions[position.getCol()][position.getRow()] > 1) {
+                car.setCrashed(true);
+            }
         }
     }
 

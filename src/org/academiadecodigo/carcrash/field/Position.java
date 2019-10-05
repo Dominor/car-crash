@@ -24,10 +24,9 @@ public class Position {
     private boolean isValid (int coordinate, CoordinateType type) {
         switch (type) {
             case COLUMN:
-                return (coordinate >= 0 && coordinate <= Field.getWidth());
+                return (coordinate >= 0 && coordinate < Field.getWidth());
             case ROW:
-                System.out.println(coordinate >= 0 && coordinate <= Field.getHeight());
-                return (coordinate >= 0 && coordinate <= Field.getHeight());
+                return (coordinate >= 0 && coordinate < Field.getHeight());
             default:
                 return false;
         }

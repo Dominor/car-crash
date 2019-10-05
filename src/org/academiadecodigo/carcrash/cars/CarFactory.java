@@ -17,8 +17,10 @@ public class CarFactory {
        switch (type) {
             case FIAT:
                 return new Fiat(new Position(column, row), 1 + Randomizer.getRandom(Math.min(Field.getHeight(),Field.getWidth())));
+                //return new Fiat(new Position(column, row), 1 );
             case MUSTANG:
                 return new Mustang(new Position(column, row), 1 + Randomizer.getRandom(Math.min(Field.getHeight(),Field.getWidth())));
+                //return new Mustang(new Position(column, row), 1);
             default:
                return null;
         }
