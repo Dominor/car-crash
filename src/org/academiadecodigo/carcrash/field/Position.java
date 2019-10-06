@@ -21,6 +21,18 @@ public class Position {
         return row;
     }
 
+    public boolean isNearBorder () {
+
+        if (col == 0 || col == Field.getWidth() - 1) {
+            return true;
+        }
+
+        if (row == 0 || row == Field.getHeight() - 1) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean isValid (int coordinate, CoordinateType type) {
         switch (type) {
             case COLUMN:
@@ -32,27 +44,27 @@ public class Position {
         }
     }
 
-    public void update(int steps, Direction direction) {
+    public void update(Direction direction) {
 
         switch (direction) {
             case UP:
-                if (isValid(row - steps, CoordinateType.ROW)) {
-                    row -= steps;
+                if (isValid(row - 1, CoordinateType.ROW)) {
+                    row--;
                 }
                 break;
             case DOWN:
-                if (isValid(row + steps, CoordinateType.ROW)) {
-                    row += steps;
+                if (isValid(row + 1, CoordinateType.ROW)) {
+                    row++;
                 }
                 break;
             case LEFT:
-                if (isValid(col - steps, CoordinateType.COLUMN)) {
-                    col -= steps;
+                if (isValid(col - 1, CoordinateType.COLUMN)) {
+                    col--;
                 }
                 break;
             case RIGHT:
-                if (isValid(col + steps, CoordinateType.COLUMN)) {
-                    col += steps;
+                if (isValid(col + 1, CoordinateType.COLUMN)) {
+                    col++;
                 }
                 break;
             default:

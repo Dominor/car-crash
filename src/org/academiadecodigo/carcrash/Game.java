@@ -1,6 +1,5 @@
 package org.academiadecodigo.carcrash;
 
-import javafx.geometry.Pos;
 import org.academiadecodigo.carcrash.cars.Car;
 import org.academiadecodigo.carcrash.cars.CarFactory;
 import org.academiadecodigo.carcrash.field.Direction;
@@ -10,12 +9,13 @@ import org.academiadecodigo.carcrash.field.Position;
 public class Game {
 
     public static final int MANUFACTURED_CARS = 20;
+    //public static final int MANUFACTURED_CARS = 2;
 
     /** Container of Cars */
     private Car[] cars;
 
     // Matrix used to track the positions of the cars in each instant and thus check for collisions.
-    private int[][] positions;
+    //private int[][] positions;
 
     /** Animation delay */
     private int delay;
@@ -24,7 +24,7 @@ public class Game {
 
         Field.init(cols, rows);
         this.delay = delay;
-        positions = new int[cols][rows];
+        //positions = new int[cols][rows];
 
     }
 
@@ -57,7 +57,7 @@ public class Game {
             moveAllCars();
 
             // Check for collisions
-            checkCollisions();
+            //checkCollisions();
 
             // Update screen
             Field.draw(cars);
@@ -69,12 +69,15 @@ public class Game {
     private void moveAllCars() {
         for (Car car: cars
              ) {
-            car.move(Direction.getRandomDirection());
+            car.move();
+            checkCollisions(car);
         }
     }
 
-    private void checkCollisions() {
+    /**private void checkCollisions() {
         Position position;
+
+        // reset positions matrix before checking for collisions
         for (int i = 0; i < positions.length; i++) {
             for (int j = 0; j < positions[i].length; j++) {
                 positions[i][j] = 0;
@@ -85,6 +88,20 @@ public class Game {
             positions[position.getCol()][position.getRow()]++;
             if (positions[position.getCol()][position.getRow()] > 1) {
                 car.setCrashed(true);
+            }
+        }
+    }*/
+
+    private void checkCollisions(Car car) {
+
+        for (Car otherCar : cars) {
+            if (car == otherCar) {
+                continue;
+            }
+            if (car.getPos().equals(otherCar.getPos())) {
+                car.setCrashed(true);
+                otherCar.setCrashed(true);
+                System.out.println(car.toDebugString() + " crashed with " + otherCar.toDebugString());
             }
         }
     }
