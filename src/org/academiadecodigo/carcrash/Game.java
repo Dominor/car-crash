@@ -15,7 +15,7 @@ public class Game {
     private Car[] cars;
 
     // Matrix used to track the positions of the cars in each instant and thus check for collisions.
-    //private int[][] positions;
+    private int[][] positions;
 
     /** Animation delay */
     private int delay;
@@ -24,7 +24,7 @@ public class Game {
 
         Field.init(cols, rows);
         this.delay = delay;
-        //positions = new int[cols][rows];
+        positions = new int[cols][rows];
 
     }
 
