@@ -48,7 +48,7 @@ public class Game {
      */
     public void start() throws InterruptedException {
 
-        while (true) {
+        while (!areAllCarsCrashed()) {
 
             // Pause for a while
             Thread.sleep(delay);
@@ -72,6 +72,16 @@ public class Game {
             car.move();
             checkCollisions(car);
         }
+    }
+
+    private boolean areAllCarsCrashed() {
+        for (Car car: cars
+             ) {
+            if (!car.isCrashed()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**private void checkCollisions() {
